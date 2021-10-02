@@ -96,7 +96,7 @@ Function parseOutput {
             'APM Level'                                 = $info.'APM Level'
             'AAM Level'                                 = $info.'AAM Level'
             'Drive Letter'                              = $info.'Drive Letter'
-            # HDD Values
+            # SMART Values
             'Read Error Rate'                           = $smart.'Read Error Rate'
             'Throughput Performance'                    = $smart.'Throughput Performance'
             'Spin-Up Time'                              = $smart.'Spin-Up Time'
@@ -105,14 +105,16 @@ Function parseOutput {
             'Reallocation Event Count'                  = $smart.'Reallocation Event Count'
             'Current Pending Sector Count'              = $smart.'Current Pending Sector Count'
             'Uncorrectable Sector Count'                = $smart.'Uncorrectable Sector Count'
-            'UltraDMA CRC Error Count'                  = $smart.'UltraDMA CRC Error Count'   
+            'Uncorrectable Error Count '                = $smart.'Uncorrectable Error Count'
+            'UltraDMA CRC Error Count'                  = $smart.'UltraDMA CRC Error Count'
+            'CRC Error Count'                           = $smart.'CRC Error Count'
+            'SATA R-Errors (CRC) Error Count'           = $smart.'SATA R-Errors (CRC) Error Count'
             'Seek Error Rate'                           = $smart.'Seek Error Rate'
             'Seek Time Performance'                     = $smart.'Seek Time Performance' 
             'Spin Retry Count'                          = $smart.'Spin Retry Count'   
             'Power Cycle Count'                         = $smart.'Power Cycle Count'  
             'Power-off Retract Count'                   = $smart.'Power-off Retract Count' 
             'Load/Unload Cycle Count'                   = $smart.'Load/Unload Cycle Count'   
-            # SSD Values
             'Critial Warning'                           = $smart.'Critical Warning'
             'Composite Temperature'                     = $smart.'Composite Temperature'
             'Available Spare'                           = $smart.'Available Spare'
