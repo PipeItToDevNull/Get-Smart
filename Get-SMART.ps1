@@ -17,13 +17,14 @@ param (
 #----------[Declarations]----------#
 
 $outputPath = Split-Path "$cdiPath" -Parent
-$cdiOutput = "$outputPath\DiskInfo.txt"
+$binary = Split-Path "$cdiPath" -Leaf
+$cdiOutput = "DiskInfo.txt"
 
 #----------[Functions]----------#
 
 Function runCDI {
     Set-Location $outputPath
-    & $cdiPath /CopyExit
+    &  .\$binary /CopyExit
     $to = new-timespan -Seconds 30
     $sw = [diagnostics.stopwatch]::StartNew()
     While ($sw.elapsed -lt $to){
@@ -134,7 +135,6 @@ Function parseOutput {
     Return $report
 }
 Function cleanUp {
-    Remove-Item -Force -Recurse "$outputPath\Smart","$outputPath\DiskInfo.txt","$outputPath\DiskInfo.ini" -ErrorAction SilentlyContinue
     Remove-Item -Force -Recurse ".\Smart",".\DiskInfo.txt",".\DiskInfo.ini" -ErrorAction SilentlyContinue
 }
 Function Get-Smart{
