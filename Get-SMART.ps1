@@ -74,60 +74,10 @@ Function parseOutput {
         # $info[0].Keys
         # $info[0].Values
         
-        $output = [PSCustomObject]@{
-            'Model'                                     = $info.'model'
-            'Firmware'                                  = $info.'Firmware'
-            'Serial Number'                             = $info.'Serial Number'
-            'Disk Size'                                 = $info.'Disk Size'
-            'Buffer Size'                               = $info.'Buffer Size'
-            'Queue Depth'                               = $info.'Queue Depth'
-            'Rotation Rate'                             = $info.'Rotation Rate'
-            'Interface'                                 = $info.'Interface'
-            'Major Version'                             = $info.'Major Version'
-            'Minor Version'                             = $info.'Minor Version'
-            'Transfer Mode'                             = $info.'Transfer Mode'
-            'Power On Hours'                            = $info.'Power On Hours'
-            'Power On Count'                            = $info.'Power On Count'
-            'Host Reads'                                = $info.'Host Reads'
-            'Host Writes'                               = $info.'Host Writes'
-            'Temperature'                               = $info.'Temperature'
-            'Health Status'                             = $info.'Health Status'
-            'Features'                                  = $info.'Features'
-            'APM Level'                                 = $info.'APM Level'
-            'AAM Level'                                 = $info.'AAM Level'
-            'Drive Letter'                              = $info.'Drive Letter'
-            # SMART Values
-            'Read Error Rate'                           = $smart.'Read Error Rate'
-            'Throughput Performance'                    = $smart.'Throughput Performance'
-            'Spin-Up Time'                              = $smart.'Spin-Up Time'
-            'Start/Stop Count'                          = $smart.'Start/Stop Time'
-            'Reallocated Sectors Count'                 = $smart.'Reallocated Sectors Count'
-            'Reallocation Event Count'                  = $smart.'Reallocation Event Count'
-            'Current Pending Sector Count'              = $smart.'Current Pending Sector Count'
-            'Uncorrectable Sector Count'                = $smart.'Uncorrectable Sector Count'
-            'Uncorrectable Error Count '                = $smart.'Uncorrectable Error Count'
-            'UltraDMA CRC Error Count'                  = $smart.'UltraDMA CRC Error Count'
-            'CRC Error Count'                           = $smart.'CRC Error Count'
-            'SATA R-Errors (CRC) Error Count'           = $smart.'SATA R-Errors (CRC) Error Count'
-            'Seek Error Rate'                           = $smart.'Seek Error Rate'
-            'Seek Time Performance'                     = $smart.'Seek Time Performance' 
-            'Spin Retry Count'                          = $smart.'Spin Retry Count'   
-            'Power Cycle Count'                         = $smart.'Power Cycle Count'  
-            'Power-off Retract Count'                   = $smart.'Power-off Retract Count' 
-            'Load/Unload Cycle Count'                   = $smart.'Load/Unload Cycle Count'   
-            'Critial Warning'                           = $smart.'Critical Warning'
-            'Composite Temperature'                     = $smart.'Composite Temperature'
-            'Available Spare'                           = $smart.'Available Spare'
-            'Available Spare Threshold'                 = $smart.'Available Spare Threshold'
-            'Percentage Used'                           = $smart.'Percentage Used'
-            'Data Units Read'                           = $smart.'Data Units Read'
-            'Data Units Written'                        = $smart.'Data Units Written'
-            'Host Write Commands'                       = $smart.'Host Write Commands'
-            'Controller Busy Time'                      = $smart.'Controller Busy Time'
-            'Power Cycles'                              = $smart.'Power Cycles'
-            'Unsafe Shutdowns'                          = $smart.'Unsafe Shutdowns'
-            'Media and Data Integrity Errors'           = $smart.'Media and Data Integrity Errors'
-            'Number of Error Information Log Entries'   = $smart.'Number of Error Information Log Entries'
+        $inputs = $info + $smart
+        $output = New-Object PSObject
+        ForEach ($i in $inputs) {
+            Add-Member -InputObject $output -MemberType NoteProperty -Name $i.Keys -Value $i.$($i.Keys)
         }
         $report += $output
         
@@ -139,11 +89,8 @@ Function parseOutput {
 Function cleanUp {
     Remove-Item -Force -Recurse ".\Smart",".\DiskInfo.txt",".\DiskInfo.ini" -ErrorAction SilentlyContinue
 }
-Function Get-Smart{
-    runCDI
-    parseOutput
-}
 #----------[Execution]----------#
 
-Get-Smart
+runcdi
+parseOutput 2>$null
 cleanUp
