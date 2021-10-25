@@ -79,6 +79,16 @@ Function parseOutput {
         ForEach ($i in $inputs) {
             Add-Member -InputObject $output -MemberType NoteProperty -Name $i.Keys -Value $i.$($i.Keys)
         }
+        
+        # Decimal conversion
+        $members = $output | Get-Member
+        ForEach ($member in $members.Name) {
+            If ($output.$member -match '^[0-9A-F]{12}$') {
+               $hex = "0x" + $output.$member
+               $dec = [uint32]$hex
+               $output.$member = $dec
+            }
+        }
         $report += $output
         
         # Add 2 to get our next block
