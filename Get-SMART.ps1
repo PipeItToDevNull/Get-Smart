@@ -69,11 +69,7 @@ Function parseOutput {
         $smart1 = $smart0 | ? { $_ -ne $smart0[0] } | ? { $_ -ne $smart0[1] }
         $smart = $smart1 -Replace '(^.*)(\s[0-9A-F]{12})\s(.*)$','$3 = $2' | ConvertFrom-StringData
         
-        # There are too many values to write/guess so get them with
-        # $info.Keys
-        # $info[0].Keys
-        # $info[0].Values
-        
+        # combine our variables then add them into an object, they are both hashtables and they suck to work with
         $inputs = $info + $smart
         $output = New-Object PSObject
         ForEach ($i in $inputs) {
