@@ -79,7 +79,7 @@ Function parseOutput {
         # Decimal conversion
         $members = $output | Get-Member
         ForEach ($member in $members.Name) {
-            If ($output.$member -match '^[0-9A-F]{12}$') {
+            If ($member -notlike "*Rate" -And $member -notlike "Hardware ECC recovered" -And $output.$member -match '^[0-9A-F]{12}$') {
                $hex = "0x" + $output.$member
                $dec = [uint32]$hex
                $output.$member = $dec
