@@ -25,7 +25,7 @@ $cdiOutput = "DiskInfo.txt"
 Function runCDI {
     Set-Location $outputPath
     &  .\$binary /CopyExit
-    $to = new-timespan -Seconds 30
+    $to = new-timespan -Seconds 60
     $sw = [diagnostics.stopwatch]::StartNew()
     While ($sw.elapsed -lt $to){
         if (Test-Path $cdiOutput){
